@@ -24,26 +24,55 @@ import "../style/index.css";
  */
 function render(variables = {}) {
   console.log("These are the current variables: ", variables); // print on the console
-  // here we ask the logical questions to make decisions on how to build the html
-  // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
-  let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
-  if (variables.includeCover == false) cover = "<div class='cover'></div>";
 
-  // reset the website body with the new html output
-  document.querySelector("#widget_content").innerHTML = `<div class="widget">
-            ${cover}
+  // Construir la cobertura (cover) basada en si incluir la imagen de fondo o no
+  let cover = variables.includeCover
+    ? `<div class="cover"><img src="${variables.background}" /></div>`
+    : "<div class='cover'></div>";
+
+  // Construir el HTML de la tarjeta de perfil utilizando las variables proporcionadas
+  const html = `
+        <div class="widget">
+          ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+          <h1>${variables.name ? variables.name : ""} ${
+    variables.lastName ? variables.lastName : ""
+  }</h1>
+          <h2>${variables.role ? variables.role : ""}</h2>
+          <h3>${variables.city ? variables.city : ""}, ${
+    variables.country ? variables.country : ""
+  }</h3>
+          <ul class="${
+            variables.socialMediaPosition
+              ? variables.socialMediaPosition
+              : "position-right"
+          }">
+            ${
+              variables.twitter
+                ? `<li><a href="https://twitter.com/${variables.twitter}"><i class="fab fa-twitter"></i></a></li>`
+                : ""
+            }
+            ${
+              variables.github
+                ? `<li><a href="https://github.com/${variables.github}"><i class="fab fa-github"></i></a></li>`
+                : ""
+            }
+            ${
+              variables.linkedin
+                ? `<li><a href="https://linkedin.com/in/${variables.linkedin}"><i class="fab fa-linkedin"></i></a></li>`
+                : ""
+            }
+            ${
+              variables.instagram
+                ? `<li><a href="https://instagram.com/${variables.instagram}"><i class="fab fa-instagram"></i></a></li>`
+                : ""
+            }
           </ul>
         </div>
-    `;
+      `;
+
+  // Insertar el HTML generado en el contenedor del widget
+  document.querySelector("#widget_content").innerHTML = html;
 }
 
 /**
