@@ -30,7 +30,7 @@ function render(variables = {}) {
     ? `<div class="cover"><img src="${variables.background}" /></div>`
     : "<div class='cover'></div>";
 
-  // Construir el HTML de la tarjeta de perfil utilizando las variables proporcionadas
+  // Construir el HTML de la tarjeta de perfil utilizando las variables proporcionada.
   const html = `
         <div class="widget">
           ${cover}
